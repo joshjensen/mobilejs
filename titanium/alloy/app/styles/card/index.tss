@@ -1,0 +1,45 @@
+"#card": {
+	layout: "vertical",
+	top: 25,
+	right: 15,
+	bottom: 25,
+	left: 15,
+	backgroundColor: "#fff"
+}
+
+"#card[platform=ios]": {
+	viewShadowColor: "#d9d9d9",
+	viewShadowOffset: { x: 0, y: 0 }, 
+	viewShadowRadius: 2
+}
+
+"#toDoTable": {
+	height: Ti.UI.FILL,
+	backgroundColor: 'red'
+}
+
+"#inputWrapper": {
+	width: Ti.UI.FILL,
+	height: 60
+}
+
+"#toDoInput": {
+	bubbleParent: false,
+	left: 40,
+	right: 10,
+	width: Ti.UI.FILL,
+	hintText: "What needs to be done?",
+	textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+	font: {
+    	fontSize: 20,
+    	fontFamily: 'Helvetica-Neue',
+    	fontWeight: "lighter"
+	}	
+}
+
+".borderBottom": {
+	bottom: 0,
+	height: 1,
+	width: Ti.UI.FILL,
+	backgroundColor: "#e6e6e6"
+}

@@ -1,0 +1,13 @@
+<Alloy>
+	<View id="card">
+		<View id="inputWrapper">
+			<TextField id="toDoInput" />
+			<View class="borderBottom" />
+		</View>
+		<TableView id="toDoTable">
+	        <FooterView>
+	            <View height="0"/>
+	        </FooterView>				
+		</TableView>
+	</View>
+</Alloy>
