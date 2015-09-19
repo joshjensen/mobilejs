@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "react-native": "^0.10.1",
-    "react-native-icons": "^0.3.6"
+    "react-native-icons": "^0.3.6",
+    "react-native-swipeout": "joshjensen/react-native-swipeout",
+    "underscore": "^1.8.3"
   }
 }

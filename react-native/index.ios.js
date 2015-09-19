@@ -14,15 +14,21 @@ var todomjs = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
+        style={styles.topLevelNavigator}
+        navigationBarHidden={true}
         initialRoute={{
-          component: ListPage,
-          // passProps: { myProp: 'foo' },
+          title: '',
+          component: ListPage
         }}
       />      
     );
   }
 });
 
-var styles = StyleSheet.create();
+var styles = StyleSheet.create({
+  topLevelNavigator:{
+    flex: 1
+  },
+});
 
 AppRegistry.registerComponent('todomjs', () => todomjs);

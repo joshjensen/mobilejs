@@ -18,22 +18,86 @@ var {
 } = React;
 
 var ListPage = React.createClass({
-  onPressSelectAll: function() {
-    console.log(arguments);
-  },
-  onTextFieldChange: function(text) {
-    console.log(text);
-  },
   getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    // (r1, r2) => r1 !== r2
+    this.ds = new ListView.DataSource({rowHasChanged: function(r1, r2) {
+      console.log('rowHasChanged');
+      console.log(arguments);
+    }});
+
+    // console.log(this.ds);
     return {
-      dataSource: ds.cloneWithRows(['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','']),
+      todoItems: [],
+      dataSource: this.ds.cloneWithRows([]),
     };
   },
+  onPressSelectAll: function() {
+    console.log(arguments);
+  },  
+  onTextInputChange: function(e) {
+    // this.setState({
+    //   todo: e.text
+    // });
+  },
+  clearTextInput: function() {
+    this.refs.textInput.setNativeProps({text: ''});
+
+    var that = this;
+    setTimeout(function() {
+      that.refs.textInput.focus();
+    }, 1);    
+  },
+  createRow: function(e) {
+    if (!e.nativeEvent.text || e.nativeEvent.text === '') {
+      return false;
+    }
+
+    this.state.todoItems.unshift({
+      text: e.nativeEvent.text,
+      isChecked: false,
+      lineThrough: 'none',
+      icon: 'fontawesome|square-o',
+      iconColor: '#737373',
+      leftSwipeButtons: [{
+        text: 'Done',
+        backgroundColor: "#4ad757"
+      }]          
+    });
+    
+    this.setState({
+      dataSource: this.ds.cloneWithRows(this.state.todoItems)
+    }, function() {
+      this.clearTextInput();
+    });    
+  },
+  updateRow: function(params) {
+    if (!params.id) {
+      return;
+    }
+
+    this.state.todoItems[params.id] = params;
+
+    this.setState({
+      dataSource: this.ds.cloneWithRows(this.state.todoItems)
+    });
+  },
+  deleteRow: function(rowID) {
+    this.state.todoItems.splice(rowID, 1);
+
+    this.setState({
+      dataSource: this.ds.cloneWithRows(this.state.todoItems)
+    });
+  },  
+  componentDidMount: function() {
+    // this._textInput.focus();
+    this.refs.textInput.focus();
+
+  },  
   render: function() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>
+        <Text 
+          style={styles.header}>
           todos
         </Text>
         <View style={styles.wrapper}>
@@ -51,34 +115,26 @@ var ListPage = React.createClass({
                 />  
             </TouchableOpacity>
             <TextInput
+              ref="textInput" 
+              // ref={component => this._textInput = component}
               style={styles.textInput}
-              onChangeText={(text) => this.onTextFieldChange({text})}
               clearTextOnFocus={true}
               autoCorrect={false}
               placeholder={config.form.inputPlaceholderText}
-              value={this.state.text}
+              onChangeText={(text) => this.onTextInputChange({text})}
+              onSubmitEditing={(e) => this.createRow(e)}
+              returnKeyType='done'
             />
           </View>
           <ListView
             style={styles.todoListView}
             initialListSize={15}
             dataSource={this.state.dataSource}
-            // renderRow={(rowData) => this.renderToDoRow(rowData)}
-            renderRow={function renderToDoRow() {return (<ToDoRow />)}}
+            renderRow={(rowData, sectionID, rowID, highlightRow) => (<ToDoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
             // http://stackoverflow.com/questions/29496054/react-native-listview-leaving-space
             automaticallyAdjustContentInsets={false}
-            // bounces={false}
           />
         </View>
-      </View>
-    );
-  },
-  renderToDoRow: function(todo) {
-    return (
-      <View style={styles.toDoRow}>
-        <Text>
-          Test
-        </Text>
       </View>
     );
   }
@@ -119,13 +175,14 @@ var styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   touchableAreaIcon: {
-    alignSelf: 'center'
+    height: 60,
+    width: 60,
+    justifyContent: 'center'    
   },
   selectAllIcon: {
+    alignSelf: 'center',
     width: 20,
-    height: 20,
-    marginLeft: 15,
-    marginRight: 15,        
+    height: 20  
     
   },    
   textInput: {
