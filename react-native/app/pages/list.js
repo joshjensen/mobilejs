@@ -19,11 +19,22 @@ var {
 
 var ListPage = React.createClass({
   getInitialState: function() {
-    // (r1, r2) => r1 !== r2
-    this.ds = new ListView.DataSource({rowHasChanged: function(r1, r2) {
-      console.log('rowHasChanged');
-      console.log(arguments);
-    }});
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.rowID !== r2.rowID});
+
+      // var useArray = [];
+      //   for (var i = 0; i < 100; i++) {
+      //     useArray.push({
+      //       text: 'Lorem ipsum Amet voluptate in reprehenderit commodo commodo ut nulla elit officia culpa nostrud cillum in et pariatur dolore et amet minim reprehenderit veniam fugiat Duis nulla ut Ut dolore nulla dolor eu in ut dolor nostrud fugiat veniam occaecat minim incididunt qui sint sit fugiat amet ea cillum nisi dolore qui voluptate non dolore ut laboris dolor dolor ut sed veniam ea eiusmod magna aute ea officia commodo amet veniam ex laborum esse occaecat mollit irure id exercitation aliqua sunt incididunt est et ut aute nisi consectetur ex quis culpa ex ea in sed culpa aliqua dolor aliquip sint quis nisi dolore anim laboris nostrud veniam enim eu Duis ad deserunt est laborum dolore labore quis sit ut consectetur minim deserunt laborum minim fugiat dolore eu eu in sit aute ad Excepteur proident non dolore quis non sit elit incididunt reprehenderit Excepteur commodo non et adipisicing aute sint ex id do amet id velit anim ex minim Duis aute pariatur tempor in do ex consectetur minim voluptate commodo non veniam consequat non dolor ex do minim consectetur deserunt ullamco culpa irure in non incididunt aliqua occaecat ullamco dolor voluptate.,',
+      //       isChecked: false,
+      //       lineThrough: 'none',
+      //       icon: 'fontawesome|square-o',
+      //       iconColor: '#737373',
+      //       leftSwipeButtons: [{
+      //         text: 'Done',
+      //         backgroundColor: "#4ad757"
+      //       }]          
+      //     });
+      //   };
 
     // console.log(this.ds);
     return {
@@ -53,6 +64,7 @@ var ListPage = React.createClass({
     }
 
     this.state.todoItems.unshift({
+      rowID: new Date().getTime(),
       text: e.nativeEvent.text,
       isChecked: false,
       lineThrough: 'none',
@@ -76,10 +88,6 @@ var ListPage = React.createClass({
     }
 
     this.state.todoItems[params.id] = params;
-
-    this.setState({
-      dataSource: this.ds.cloneWithRows(this.state.todoItems)
-    });
   },
   deleteRow: function(rowID) {
     this.state.todoItems.splice(rowID, 1);

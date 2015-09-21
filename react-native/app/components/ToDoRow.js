@@ -23,9 +23,9 @@ var ToDoRow = React.createClass({
       onPress: this.deleteRow
     }];   
 
-    return {
-      closed: false
-    };
+    return _.extend({
+      closed: false        
+    }, this.props.rowData);
   },  
   onPressCheckbox: function() {
     var rowParams = this.props.rowParams;
@@ -45,7 +45,6 @@ var ToDoRow = React.createClass({
           backgroundColor: "#4ad757"
         }]                 
       }; 
-
     } else {
       toUpdate = {
         id: rowParams.rowID,
@@ -60,7 +59,8 @@ var ToDoRow = React.createClass({
       };
     }
 
-    this.props.updateRow(_.extend(rowData, toUpdate));
+    this.setState(_.extend(rowData, toUpdate));
+    this.props.updateRow(this.state);
   },
   deleteRow: function() {
     this.setState({
@@ -78,8 +78,7 @@ var ToDoRow = React.createClass({
   },
   textStyle: function() {
     return {
-      marginLeft: 10,
-      alignSelf: 'center',
+      // alignSelf: 'center',
       textDecorationLine: this.props.rowData.lineThrough || 'none'
     };    
   },
@@ -104,10 +103,15 @@ var ToDoRow = React.createClass({
                 color={this.props.rowData.iconColor}
                 style={styles.iconSquare}
                 />  
-            </TouchableOpacity>   
-            <Text style={this.textStyle()} >
-              {this.props.rowData.text}
-            </Text>            
+            </TouchableOpacity>
+            <View style={styles.textWrapper}>
+              <Text 
+                numberOfLines={5}
+                style={this.textStyle()} 
+                >
+                {this.props.rowData.text}
+              </Text> 
+            </View>           
           </View>
         </Swipeout>        
   		</View>
@@ -127,15 +131,21 @@ var styles = StyleSheet.create({
     borderBottomWidth: 1    
   },	
   touchableAreaIcon: {
+    alignSelf: 'center',
   },
   iconSquare: {
+    marginTop: 2,
     marginLeft: 4,
     alignSelf: 'center',
     width: 30,
     height: 30
   },
-  todoText: {
+  textWrapper: {
+    width: 280,
     marginLeft: 10,
+    marginRight: 10,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     alignSelf: 'center'
   }
 });
