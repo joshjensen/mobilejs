@@ -36,16 +36,7 @@ var ListPage = React.createClass({
           item.children = markAllAsDone(item.children);
         }
 
-        todoItems[index] = _.extend(item, {
-          isChecked: true,
-          lineThrough: 'line-through',
-          icon: 'fontawesome|check-square-o',
-          iconColor: '#25c73a',
-          leftSwipeButtons: [{
-            text: 'Undo',
-            backgroundColor: "#737373"
-          }]         
-        });
+        todoItems[index] = _.extend(item, config.rowTypes.done);
       });
 
       return todoItems;
@@ -67,16 +58,7 @@ var ListPage = React.createClass({
           item.children = updateChildren(item.children);
         }
 
-        todoItem[index] = _.extend(item, {
-          isChecked: true,
-          lineThrough: 'line-through',
-          icon: 'fontawesome|check-square-o',
-          iconColor: '#25c73a',
-          leftSwipeButtons: [{
-            text: 'Undo',
-            backgroundColor: "#737373"
-          }]         
-        });
+        todoItem[index] = _.extend(item, config.rowTypes.notDone);
       });
 
       return todoItem;
@@ -97,20 +79,12 @@ var ListPage = React.createClass({
       return false;
     }
 
-    this.state.todoItems.unshift({
+    this.state.todoItems.unshift(_.extend({
       rowID: new Date().getTime(),
       text: e.nativeEvent.text,
-      isChecked: false,
-      lineThrough: 'none',
-      icon: 'fontawesome|square-o',
-      iconColor: '#737373',
-      leftSwipeButtons: [{
-        text: 'Done',
-        backgroundColor: "#4ad757"
-      }],
-      children: []     
-    });
-    
+      children: []
+    }, config.rowTypes.notDone));
+  
     if (this.props.updateRowChildren) {
       this.props.updateRowChildren(this.props.rowID, this.state.todoItems);
     }
@@ -136,23 +110,13 @@ var ListPage = React.createClass({
           }
 
           childTodoItems[index] = _.extend(item, _.omit(params, 'id', 'rowID', 'text', 'children'));
-
-          console.log('childTodoItems');
-          console.log(childTodoItems);
-
         });
-
-        console.log(childTodoItems);
 
         return childTodoItems;
       };
 
       thisRow.children = toggelAllChildren(thisRow.children);
     }
-
-    
-
-    console.log(thisRow.children);
 
     this.state.todoItems[params.id] = _.extend(thisRow, params);
 

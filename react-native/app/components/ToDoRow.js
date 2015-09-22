@@ -3,6 +3,8 @@ var React = require('react-native');
 var Icons = require('react-native-icons');
 var Swipeout = require('react-native-swipeout');
 
+var config = require('./../lib/config');
+
 var {
 	View,
 	Text,
@@ -33,33 +35,10 @@ var ToDoRow = React.createClass({
     var toUpdate = {};
 
     if (rowData.isChecked) {
-      toUpdate = {
-        id: rowParams.rowID,
-        isChecked: false,
-        lineThrough: 'none',
-        icon: 'fontawesome|square-o',
-        iconColor: '#737373',
-        leftSwipeButtons: [{
-          text: 'Done',
-          backgroundColor: "#4ad757"
-        }]                 
-      }; 
+      toUpdate = _.extend({id: rowParams.rowID}, config.rowTypes.notDone); 
     } else {
-      toUpdate = {
-        id: rowParams.rowID,
-        isChecked: true,
-        lineThrough: 'line-through',
-        icon: 'fontawesome|check-square-o',
-        iconColor: '#25c73a',
-        leftSwipeButtons: [{
-          text: 'Undo',
-          backgroundColor: "#737373"
-        }]             
-      };
+      toUpdate = _.extend({id: rowParams.rowID}, config.rowTypes.done);
     }
-
-    console.log(toUpdate);
-    console.log(_.extend(rowData, toUpdate));
 
     var newRowParams = _.extend(rowData, toUpdate);
 
