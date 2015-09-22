@@ -1,8 +1,7 @@
+var _ = require('underscore');
 var React = require('react-native');
 var Icons = require('react-native-icons');
 var Swipeout = require('react-native-swipeout');
-
-var _ = require('underscore');
 
 var {
 	View,
@@ -59,8 +58,13 @@ var ToDoRow = React.createClass({
       };
     }
 
-    this.setState(_.extend(rowData, toUpdate));
-    this.props.updateRow(this.state);
+    console.log(toUpdate);
+    console.log(_.extend(rowData, toUpdate));
+
+    var newRowParams = _.extend(rowData, toUpdate);
+
+    this.setState(newRowParams);
+    this.props.updateRow(newRowParams);
   },
   deleteRow: function() {
     this.setState({
@@ -81,6 +85,9 @@ var ToDoRow = React.createClass({
       // alignSelf: 'center',
       textDecorationLine: this.props.rowData.lineThrough || 'none'
     };    
+  },
+  rowOnPress: function() {
+    this.props.rowOnPress(this.props.rowParams.rowID);
   },
 	render: function() {
 		return (
@@ -104,14 +111,17 @@ var ToDoRow = React.createClass({
                 style={styles.iconSquare}
                 />  
             </TouchableOpacity>
-            <View style={styles.textWrapper}>
+            <TouchableOpacity 
+              style={styles.textWrapper} 
+              onPress={() => this.rowOnPress(this.props.rowData.rowID)}
+              >
               <Text 
                 numberOfLines={5}
                 style={this.textStyle()} 
                 >
                 {this.props.rowData.text}
-              </Text> 
-            </View>           
+              </Text>
+            </TouchableOpacity>          
           </View>
         </Swipeout>        
   		</View>

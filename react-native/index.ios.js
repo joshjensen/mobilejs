@@ -26,7 +26,7 @@ var todomjs = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  topLevelNavigator:{
+  topLevelNavigator: {
     flex: 1
   },
 });

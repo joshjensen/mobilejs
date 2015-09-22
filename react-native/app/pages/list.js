@@ -1,7 +1,8 @@
+var _ = require('underscore');
 var React = require('react-native');
 var Icons = require('react-native-icons');
 
-var ToDoRow = require('./../components/ToDoRow');
+var ToDoRow = require('./../components/todorow');
 
 var config = require('./../lib/config');
 
@@ -21,34 +22,67 @@ var ListPage = React.createClass({
   getInitialState: function() {
     this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.rowID !== r2.rowID});
 
-      // var useArray = [];
-      //   for (var i = 0; i < 100; i++) {
-      //     useArray.push({
-      //       text: 'Lorem ipsum Amet voluptate in reprehenderit commodo commodo ut nulla elit officia culpa nostrud cillum in et pariatur dolore et amet minim reprehenderit veniam fugiat Duis nulla ut Ut dolore nulla dolor eu in ut dolor nostrud fugiat veniam occaecat minim incididunt qui sint sit fugiat amet ea cillum nisi dolore qui voluptate non dolore ut laboris dolor dolor ut sed veniam ea eiusmod magna aute ea officia commodo amet veniam ex laborum esse occaecat mollit irure id exercitation aliqua sunt incididunt est et ut aute nisi consectetur ex quis culpa ex ea in sed culpa aliqua dolor aliquip sint quis nisi dolore anim laboris nostrud veniam enim eu Duis ad deserunt est laborum dolore labore quis sit ut consectetur minim deserunt laborum minim fugiat dolore eu eu in sit aute ad Excepteur proident non dolore quis non sit elit incididunt reprehenderit Excepteur commodo non et adipisicing aute sint ex id do amet id velit anim ex minim Duis aute pariatur tempor in do ex consectetur minim voluptate commodo non veniam consequat non dolor ex do minim consectetur deserunt ullamco culpa irure in non incididunt aliqua occaecat ullamco dolor voluptate.,',
-      //       isChecked: false,
-      //       lineThrough: 'none',
-      //       icon: 'fontawesome|square-o',
-      //       iconColor: '#737373',
-      //       leftSwipeButtons: [{
-      //         text: 'Done',
-      //         backgroundColor: "#4ad757"
-      //       }]          
-      //     });
-      //   };
-
-    // console.log(this.ds);
     return {
-      todoItems: [],
-      dataSource: this.ds.cloneWithRows([]),
+      todoItems: this.props.todoItems || [],
+      dataSource: this.ds.cloneWithRows(this.props.todoItems || []),
     };
   },
-  onPressSelectAll: function() {
-    console.log(arguments);
+  markAllAsDoneButton: function() {
+    var that = this;
+
+    function markAllAsDone(todoItems) {
+      _.each(todoItems, function(item, index) {
+        if (item.children && item.children.length > 0) {
+          item.children = markAllAsDone(item.children);
+        }
+
+        todoItems[index] = _.extend(item, {
+          isChecked: true,
+          lineThrough: 'line-through',
+          icon: 'fontawesome|check-square-o',
+          iconColor: '#25c73a',
+          leftSwipeButtons: [{
+            text: 'Undo',
+            backgroundColor: "#737373"
+          }]         
+        });
+      });
+
+      return todoItems;
+    }
+
+    var updatedTodoRows = markAllAsDone(this.state.todoItems);
+
+    this.setState({
+      todoItems: updatedTodoRows,
+      dataSource: this.ds.cloneWithRows(updatedTodoRows)
+    });
+
+    updatedTodoRows = null;
   },  
+  updateChildren: function() {
+    function updateChildren(todoItem) {
+      _.each(todoItem, function(item, index) {
+        if (item.children && item.children.length > 0) {
+          item.children = updateChildren(item.children);
+        }
+
+        todoItem[index] = _.extend(item, {
+          isChecked: true,
+          lineThrough: 'line-through',
+          icon: 'fontawesome|check-square-o',
+          iconColor: '#25c73a',
+          leftSwipeButtons: [{
+            text: 'Undo',
+            backgroundColor: "#737373"
+          }]         
+        });
+      });
+
+      return todoItem;
+    }
+  },
   onTextInputChange: function(e) {
-    // this.setState({
-    //   todo: e.text
-    // });
   },
   clearTextInput: function() {
     this.refs.textInput.setNativeProps({text: ''});
@@ -73,9 +107,14 @@ var ListPage = React.createClass({
       leftSwipeButtons: [{
         text: 'Done',
         backgroundColor: "#4ad757"
-      }]          
+      }],
+      children: []     
     });
     
+    if (this.props.updateRowChildren) {
+      this.props.updateRowChildren(this.props.rowID, this.state.todoItems);
+    }
+
     this.setState({
       dataSource: this.ds.cloneWithRows(this.state.todoItems)
     }, function() {
@@ -87,19 +126,91 @@ var ListPage = React.createClass({
       return;
     }
 
-    this.state.todoItems[params.id] = params;
+    var thisRow = this.state.todoItems[params.id];
+
+    if (thisRow.children && thisRow.children.length > 0) {
+      function toggelAllChildren(childTodoItems) {
+        _.each(childTodoItems, function(item, index) {
+          if (item.children && item.children.length > 0) {
+            item.children = toggelAllChildren(item.children);
+          }
+
+          childTodoItems[index] = _.extend(item, _.omit(params, 'id', 'rowID', 'text', 'children'));
+
+          console.log('childTodoItems');
+          console.log(childTodoItems);
+
+        });
+
+        console.log(childTodoItems);
+
+        return childTodoItems;
+      };
+
+      thisRow.children = toggelAllChildren(thisRow.children);
+    }
+
+    
+
+    console.log(thisRow.children);
+
+    this.state.todoItems[params.id] = _.extend(thisRow, params);
+
+
   },
   deleteRow: function(rowID) {
     this.state.todoItems.splice(rowID, 1);
 
+    if (this.props.updateRowChildren) {
+      this.props.updateRowChildren(this.props.rowID, this.state.todoItems);   
+    }
+    
     this.setState({
       dataSource: this.ds.cloneWithRows(this.state.todoItems)
     });
   },  
+  updateRowChildren: function(rowID, children) {
+    if (this.state.todoItems[rowID]) {
+      this.state.todoItems[rowID].children = children;
+    }
+  },
+  rowOnPress: function(rowID) {
+    this.props.navigator.push({
+      title: '',
+      component: require('./list'),
+      passProps: {
+        rowID: rowID,
+        showBack: true,
+        todoItems: this.state.todoItems[rowID].children,
+        updateRowChildren: this.updateRowChildren
+      }
+    });
+  },
+  backOnPress: function() {
+    this.props.navigator.pop();
+  },
+  renderBackButton: function() {
+    if (this.props.showBack) {
+      return (
+        <TouchableOpacity
+          style={styles.touchableAreaBackIcon} 
+          onPress={() => this.backOnPress()}
+          activeOpacity={0.2}
+          >
+          <Icon
+            name='fontawesome|arrow-circle-o-left'
+            size={30}
+            color='#ead7d7'
+            style={styles.backButtonIcon}
+            />  
+        </TouchableOpacity>
+      );
+    }
+  },
   componentDidMount: function() {
-    // this._textInput.focus();
-    this.refs.textInput.focus();
-
+    if (this.state.todoItems.length === 0) {
+      this.refs.textInput.focus();
+    }
   },  
   render: function() {
     return (
@@ -107,19 +218,20 @@ var ListPage = React.createClass({
         <Text 
           style={styles.header}>
           todos
-        </Text>
+        </Text>      
+        {this.renderBackButton()}        
         <View style={styles.wrapper}>
           <View style={styles.formWrapper}> 
             <TouchableOpacity
               style={styles.touchableAreaIcon} 
-              onPress={() => this.onPressSelectAll()}
+              onPress={() => this.markAllAsDoneButton()}
               activeOpacity={0.2}
               >
               <Icon
                 name='fontawesome|chevron-down'
                 size={18}
                 color='#737373'
-                style={styles.selectAllIcon}
+                style={styles.backButtonIcon}
                 />  
             </TouchableOpacity>
             <TextInput
@@ -138,7 +250,7 @@ var ListPage = React.createClass({
             style={styles.todoListView}
             initialListSize={15}
             dataSource={this.state.dataSource}
-            renderRow={(rowData, sectionID, rowID, highlightRow) => (<ToDoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
+            renderRow={(rowData, sectionID, rowID, highlightRow) => (<ToDoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowOnPress={this.rowOnPress} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
             // http://stackoverflow.com/questions/29496054/react-native-listview-leaving-space
             automaticallyAdjustContentInsets={false}
           />
@@ -156,6 +268,27 @@ var styles = StyleSheet.create({
     alignItems: 'stretch',
     backgroundColor: '#f5f5f5',
   },
+  touchableAreaBackIcon: {
+    height: 50,
+    width: 50,
+    top: 45,
+    left: 10,
+    justifyContent: 'center',
+    position: 'absolute'
+  },
+  backButtonIcon: {
+    alignSelf: 'center',
+    width: 40,
+    height: 40
+  },
+  headerBack: {
+    fontFamily: 'Helvetica Neue',
+    fontWeight: '100',
+    justifyContent: 'center',
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#000'
+  },  
   header: {
     fontFamily: 'Helvetica Neue',
     fontWeight: '100',
@@ -190,8 +323,7 @@ var styles = StyleSheet.create({
   selectAllIcon: {
     alignSelf: 'center',
     width: 20,
-    height: 20  
-    
+    height: 20
   },    
   textInput: {
     flex: 1,
