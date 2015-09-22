@@ -2,8 +2,7 @@ var _ = require('underscore');
 var React = require('react-native');
 var Icons = require('react-native-icons');
 
-var ToDoRow = require('./../components/todorow');
-
+var TodoRow = require('./../components/todorow');
 var config = require('./../lib/config');
 
 var { Icon } = Icons;
@@ -214,7 +213,7 @@ var ListPage = React.createClass({
             style={styles.todoListView}
             initialListSize={15}
             dataSource={this.state.dataSource}
-            renderRow={(rowData, sectionID, rowID, highlightRow) => (<ToDoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowOnPress={this.rowOnPress} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
+            renderRow={(rowData, sectionID, rowID, highlightRow) => (<TodoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowOnPress={this.rowOnPress} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
             // http://stackoverflow.com/questions/29496054/react-native-listview-leaving-space
             automaticallyAdjustContentInsets={false}
           />
