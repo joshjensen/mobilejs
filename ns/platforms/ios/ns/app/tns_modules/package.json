@@ -1,0 +1,72 @@
+{
+  "name": "tns-core-modules",
+  "description": "Telerik NativeScript Core Modules",
+  "version": "1.3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NativeScript/NativeScript/commit/2c02b356f4e06028be2aeb22eada64d1fad9d9c5"
+  },
+  "files": [
+    "**/*.*",
+    "**/*",
+    "!node-tests/"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "grunt": "0.4.5",
+    "grunt-contrib-clean": "0.6.0",
+    "grunt-contrib-copy": "git+https://github.com/ErjanGavalji/grunt-contrib-copy.git#1c976a133210be4ce8c96313f5daf14833f7f8f9",
+    "grunt-exec": "0.4.6",
+    "grunt-multi-dest": "1.0.0",
+    "grunt-shell": "1.1.2",
+    "grunt-ts": "4.2.0",
+    "grunt-tslint": "2.4.0",
+    "mocha": "2.2.5",
+    "grunt-simple-mocha": "0.4.0",
+    "grunt-env": "0.4.4",
+    "chai": "3.2.0",
+    "typescript": "1.5.3"
+  },
+  "_id": "tns-core-modules@1.3.0",
+  "_shasum": "8095b5651444d49ab9a15ee8f21262ecfb6abf44",
+  "_resolved": "https://registry.npmjs.org/tns-core-modules/-/tns-core-modules-1.3.0.tgz",
+  "_from": "tns-core-modules@*",
+  "scripts": {},
+  "_npmVersion": "2.11.3",
+  "_nodeVersion": "0.12.7",
+  "_npmUser": {
+    "name": "erjangavalji",
+    "email": "erjan.gavalji@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "erjangavalji",
+      "email": "erjan.gavalji@gmail.com"
+    },
+    {
+      "name": "hdeshev",
+      "email": "hristo@deshev.com"
+    },
+    {
+      "name": "ligaz",
+      "email": "stefan.dobrev@gmail.com"
+    },
+    {
+      "name": "sdobrev",
+      "email": "stefan.dobrev@gmail.com"
+    },
+    {
+      "name": "fatme",
+      "email": "hfatme@gmail.com"
+    },
+    {
+      "name": "valio.stoychev",
+      "email": "valio.stoychev@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "8095b5651444d49ab9a15ee8f21262ecfb6abf44",
+    "tarball": "http://registry.npmjs.org/tns-core-modules/-/tns-core-modules-1.3.0.tgz"
+  },
+  "directories": {}
+}

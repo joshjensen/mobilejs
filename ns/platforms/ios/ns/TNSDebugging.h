@@ -76,7 +76,7 @@ static dispatch_source_t TNSCreateInspectorServer(
         
         TNSInspectorSendMessageBlock sender = ^(NSString *message) {
             
-            uint32_t length = [message lengthOfBytesUsingEncoding:NSUTF16LittleEndianStringEncoding];
+            NSUInteger length = [message lengthOfBytesUsingEncoding:NSUTF16LittleEndianStringEncoding];
             
             void* buffer = malloc(length + sizeof(uint32_t));
             
@@ -189,7 +189,18 @@ static void TNSEnableRemoteInspector(int argc, char **argv) {
 
       if (isWaitingForDebugger) {
         isWaitingForDebugger = NO;
-        CFRunLoopStop(CFRunLoopGetMain());
+          
+        CFRunLoopRef runloop = CFRunLoopGetMain();
+        CFRunLoopPerformBlock(runloop,
+                              (__bridge CFTypeRef)(NSRunLoopCommonModes),
+                              ^{
+                                    // If we pause right away the debugger messages that are send are not handled because the frontend is not yet initialized
+                                    CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1, false);
+                                    
+                                    [inspector pause];
+                               });
+        CFRunLoopWakeUp(runloop);
+        CFRunLoopStop(runloop);
       }
 
       NSArray *inspectorRunloopModes =
