@@ -7,7 +7,7 @@
         <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
       </StackLayout>
       <Border id="formBottomBorder" />
-      <ListView items="{{ todos }}" verticalAlignment="stretch">
+      <ListView items="{{ todos }}" height="300">
           <ListView.itemTemplate>
               <StackLayout orientatqion="horizontal">
                   <Label text="{{ name }}" />
