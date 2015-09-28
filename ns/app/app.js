@@ -1,5 +1,8 @@
 var application = require('application');
+
+
 application.mainModule = 'todo/list';
+application.cssFile = './app.css';
 
 if (application.ios) {
   var fontModule = require('ui/styling/font');
@@ -7,5 +10,4 @@ if (application.ios) {
   fontModule.ios.registerFont('fontawesome-webfont.ttf');
 }
 
-application.cssFile = './app.css';
 application.start();

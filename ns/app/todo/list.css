@@ -1,16 +1,8 @@
 #header {
-    font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
-    font-size: 80;
-    text-align: center;
-    color: #e7e7e7;
-    margin-top: 20;
-}
-
-#wrapper {
-	margin: 10;
-    border-width: 0.5;
-    border-color: #B9B9B9;
-    background-color: #fff;
+  font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
+  font-size: 80;
+  text-align: center;
+  color: #e7e7e7;
 }
 
 #textInput {
@@ -22,19 +14,35 @@
 }
 
 #selectAllIcon {
-    margin-left: 18;
-    font-family: FontAwesome;
-    font-size: 35;
-    width: 30;
-    height: 30;
-    color: #737373;
+  margin-left: 18;
+  font-family: FontAwesome;
+  font-size: 35;
+  width: 30;
+  height: 30;
+  color: #737373;
 }
 
 #formBottomBorder {
-    border-color: #e6e6e6;
-    border-width: 0.5;
+  margin-right: 10; 
+  margin-left: 10;    
+  border-color: #e6e6e6;
+  border-width: 0.5;
 }
 
-.IndieFlower {
-    font-family:IndieFlower;
+#formWrapper {
+  background-color: #fff;
+  border-color: #e6e6e6;
+  border-width: 1;   
+  margin-right: 10; 
+  margin-top: 10;
+  margin-left: 10;  
+}
+
+#listView {
+  margin-top: -1;
+  border-color: #e6e6e6;
+  border-width: 1;   
+  margin-right: 10; 
+  margin-bottom: 10;
+  margin-left: 10;
 }

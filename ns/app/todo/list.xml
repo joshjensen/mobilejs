@@ -1,19 +1,19 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" loaded="onLoaded">
   <DockLayout stretchLastChild="true">    
-    <Label dock="top" text="Todo" id="header" stretch="none" horizontalAlignment="center" class="IndieFlower" />
-    <StackLayout text="fill" id="wrapper" backgroundColor="red">
-      <StackLayout orientation="horizontal">
+    <StackLayout dock="top" text="fill" id="wrapper">
+      <Label text="Todo" id="header" stretch="none" horizontalAlignment="center" />
+      <StackLayout orientation="horizontal" id="formWrapper">
         <Label text="" id="selectAllIcon" />
         <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
-      </StackLayout>
-      <Border id="formBottomBorder" />
-      <ListView items="{{ todos }}" height="300">
-          <ListView.itemTemplate>
-              <StackLayout orientatqion="horizontal">
-                  <Label text="{{ name }}" />
-              </StackLayout>
-          </ListView.itemTemplate>
-      </ListView>      
+      </StackLayout>   
+      <Border id="formBottomBorder" />   
     </StackLayout>
+    <ListView items="{{ todos }}" id="listView" separatorColor="#fff">
+        <ListView.itemTemplate>
+            <StackLayout orientatqion="horizontal">
+                <Label text="{{ name }}" />
+            </StackLayout>
+        </ListView.itemTemplate>
+    </ListView>    
   </DockLayout>
 </Page>
