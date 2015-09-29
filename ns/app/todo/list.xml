@@ -1,4 +1,4 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" loaded="onLoaded">
+<Page xmlns="http://www.nativescript.org/tns.xsd" navigatedTo="navigatedTo">
   <DockLayout stretchLastChild="true">    
     <StackLayout dock="top" text="fill" id="wrapper">
       <Label text="Todo" id="header" stretch="none" horizontalAlignment="center" />
