@@ -2,7 +2,7 @@
   <DockLayout stretchLastChild="true">    
     <StackLayout dock="top" text="fill" id="wrapper">
       <Label text="Todo" id="header" stretch="none" horizontalAlignment="center" />
-      <StackLayout orientation="horizontal" id="formWrapper">
+      <StackLayout orientation="horizontal" id="formWrapper" cssClass="fa">
         <Label text="" id="selectAllIcon" />
         <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
       </StackLayout>   
@@ -10,7 +10,8 @@
     </StackLayout>
     <ListView items="{{ todos }}" id="listView" separatorColor="#fff">
         <ListView.itemTemplate>
-            <StackLayout orientatqion="horizontal">
+            <StackLayout orientation="horizontal" cssClass="todo-row">
+                <Label text="" cssClass="fa checkbox" />
                 <Label text="{{ name }}" />
             </StackLayout>
         </ListView.itemTemplate>

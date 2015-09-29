@@ -9,7 +9,7 @@ var topmost;
 
 function navigatedTo(args) {
     var page = args.object;
-    var todos = new observableArray.ObservableArray([]);
+    var todos = new observableArray.ObservableArray([{text: 'test'}]);
     var pageData = new observableModule.Observable();
 
     page.bindingContext = pageData;

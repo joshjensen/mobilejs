@@ -15,7 +15,6 @@
 
 #selectAllIcon {
   margin-left: 18;
-  font-family: FontAwesome;
   font-size: 35;
   width: 30;
   height: 30;
@@ -45,4 +44,21 @@
   margin-right: 10; 
   margin-bottom: 10;
   margin-left: 10;
+}
+
+.font-awesome {
+  font-family: FontAwesome;
+}
+
+.checkbox {
+  margin-left: 4;
+  font-size: 35;
+  width: 30;
+  height: 30;
+  color: #737373;  
+}
+
+.todo-row {
+  padding: 10;
+  background-color: red;
 }
