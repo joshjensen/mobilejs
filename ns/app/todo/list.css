@@ -10,7 +10,7 @@
 	padding: 10;
 	font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
 	font-size: 24;
-	color: #000;  	
+	color: #000;
 }
 
 #selectAllIcon {
@@ -19,13 +19,6 @@
   width: 30;
   height: 30;
   color: #737373;
-}
-
-#formBottomBorder {
-  margin-right: 10; 
-  margin-left: 10;    
-  border-color: #e6e6e6;
-  border-width: 0.5;
 }
 
 #formWrapper {
@@ -51,14 +44,15 @@
 }
 
 .checkbox {
-  margin-left: 4;
+  margin-left: 5;
+  margin-right: 10;
   font-size: 35;
   width: 30;
   height: 30;
-  color: #737373;  
+  color: #737373;
 }
 
 .todo-row {
   padding: 10;
-  background-color: red;
+  background-color: #F2FBFF;
 }
