@@ -1,0 +1,40 @@
+"#toDoRowWrapper": {
+  layout: 'horizontal',
+  width: Ti.UI.FILL,
+  height: Ti.UI.SIZE
+}
+
+"#toDoRow": {
+  width: Ti.UI.FILL,
+  height: Ti.UI.SIZE,
+  top: 10,
+}
+
+"#icon": {
+  left: 10,
+  height: 60,
+  width: 30,
+  textAlign: "center",
+  verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+	font: {
+		fontFamily: 'FontAwesome',
+		fontSize: 30
+	}	
+}
+
+"#text": {
+  left: 50,
+  right: 10,
+  verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+  font: {
+	  fontFamily: "HelveticaNeue ",
+	  fontSize: 12,
+  }	
+}
+
+".hborder": {
+  top: 5,
+  height: 1,
+  backgroundColor: "#e6e6e6",
+  width: Ti.UI.Fill
+}

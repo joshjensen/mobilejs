@@ -194,7 +194,7 @@ var ListPage = React.createClass({
                 name='fontawesome|chevron-down'
                 size={18}
                 color='#737373'
-                style={styles.backButtonIcon}
+                style={styles.selectAllIcon}
                 />  
             </TouchableOpacity>
             <TextInput
@@ -257,7 +257,7 @@ var styles = StyleSheet.create({
     fontWeight: '100',
     fontSize: 80,
     textAlign: 'center',
-    color: '#ead7d7',
+    color: '#e7e7e7',
     marginTop: 20
   },
   wrapper: {
@@ -285,9 +285,9 @@ var styles = StyleSheet.create({
   },
   selectAllIcon: {
     alignSelf: 'center',
-    width: 20,
-    height: 20
-  },    
+    width: 40,
+    height: 40
+  }, 
   textInput: {
     flex: 1,
     height: 60,

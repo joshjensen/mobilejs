@@ -1,0 +1,6 @@
+<Alloy>
+	<TableViewRow>
+		<Label id="icon" />
+		<Label id="text" />
+	</TableViewRow>
+</Alloy>

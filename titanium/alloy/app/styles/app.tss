@@ -1,0 +1,9 @@
+"TableView": {
+	separatorStyle: "Ti.UI.iPhone.TableViewSeparatorStyle.NONE"
+}
+
+".fa": {
+	font: {
+		fontFamily: 'FontAwesome'
+	}
+}

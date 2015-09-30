@@ -1,0 +1,79 @@
+"#listWindow": {
+	backgroundColor: "#f5f5f5",
+	layout: "vertical"
+}
+
+"#headerWrapper": {
+	height: Ti.UI.SIZE,
+	width: Titanium.UI.FILL
+}
+
+"#header": {
+	top: 20,
+	color: "#e7e7e7",
+	textAlign: "center",
+  font: {
+      fontFamily: "HelveticaNeue-Thin",
+      fontSize: 80,
+  }
+}
+
+"#wrapper": {
+  layout: "vertical",
+	top: 10,
+	left: 10,
+	right: 10,
+	bottom: 10,
+	backgroundColor: "#fff",
+	borderColor: "#B9B9B9",	
+    viewShadowColor: "#dcdcdc",
+    viewShadowRadius: 3,
+    viewShadowOffset: {
+      x: -1,
+      y: -1
+    },	
+}
+
+"#formWrapper": {
+  top: 0,
+  height: Ti.UI.SIZE,
+	layout: "horizontal"
+}
+
+"#selectAllIcon": {
+  left: 10,
+  height: 60,
+  width: 30,
+  textAlign: "center",
+  verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+  color: "#737373",
+  font: {
+      fontSize: 40
+  }  
+}
+
+"#textInput": {
+  width: Ti.UI.FILL,
+  height: 60,
+  font: {
+    fontFamily: "HelveticaNeue-Thin",
+    fontSize: 24,
+  },
+  color: "#000",  
+}
+
+"#textInput[platform=ios]": {
+  paddingLeft: 10
+}
+
+"#todoListView": {
+  height: Ti.UI.FILL
+}
+
+".hborder": {
+  top: 0,
+  height: 1,
+  backgroundColor: "#e6e6e6",
+  width: Ti.UI.Fill
+}
+

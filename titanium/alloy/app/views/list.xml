@@ -1,0 +1,15 @@
+<Alloy>
+	<Window id="listWindow">
+		<View id="headerWrapper">
+			<Label id="header">Todos</Label>
+		</View>
+		<View id="wrapper">
+			<View id="formWrapper">
+				<Label id="selectAllIcon" class="fa"></Label>
+				<TextField id="textInput" />
+			</View>
+      <View class="hborder" />
+      <TableView id="todoTable" />
+		</View>
+	</Window>
+</Alloy>

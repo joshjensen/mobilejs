@@ -1,5 +1,7 @@
-function doClick(e) {
-    alert($.label.text);
+var application = require('application');
+
+if (OS_IOS) {
+	application.navWindow = $.navWindow;
 }
 
-$.index.open();
+application.init();

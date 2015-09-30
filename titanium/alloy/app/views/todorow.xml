@@ -1,0 +1,11 @@
+<Alloy>
+	<TableViewRow>
+		<View id="toDoRowWrapper">
+			<View id="toDoRow">
+				<Label id="icon" />
+				<Label id="text" />
+			</View>
+			<View class="hborder" />
+		</View>
+	</TableViewRow>
+</Alloy>
