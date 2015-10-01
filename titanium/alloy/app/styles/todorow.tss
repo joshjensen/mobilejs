@@ -27,7 +27,7 @@
 }
 
 "#deleteIcon": {
-  right: 10,
+  right: 0,
   height: 30,
   width: 30,
   textAlign: "center",
