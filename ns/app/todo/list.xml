@@ -10,7 +10,7 @@
     <ListView items="{{ todos }}" id="listView" separatorColor="#fff">
         <ListView.itemTemplate>
             <StackLayout orientation="horizontal" cssClass="todo-row">
-                <Label text="" cssClass="fa checkbox" />
+                <Label text="{{ done ? '' : '' }}" cssClass="fa checkbox" tap="toggle" />
                 <Label text="{{ name }}" />
             </StackLayout>
         </ListView.itemTemplate>
