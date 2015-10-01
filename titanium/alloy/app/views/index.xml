@@ -1,2 +1,5 @@
 <Alloy>
+  <NavigationWindow id="navWindow">
+    <Require src="list" />
+  </NavigationWindow>	
 </Alloy>

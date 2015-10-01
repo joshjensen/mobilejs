@@ -1,6 +1,7 @@
 <Alloy>
 	<Window id="listWindow">
 		<View id="headerWrapper">
+      <Label id="backButton" class="fa"></Label>
 			<Label id="header">Todos</Label>
 		</View>
 		<View id="wrapper">

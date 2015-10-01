@@ -1,11 +1,23 @@
 "#listWindow": {
 	backgroundColor: "#f5f5f5",
-	layout: "vertical"
+	layout: "vertical",
+  navBarHidden: true
 }
 
 "#headerWrapper": {
 	height: Ti.UI.SIZE,
 	width: Titanium.UI.FILL
+}
+
+"#backButton": {
+  top: 50,
+  left: 10,
+  width: 40,
+  height: 40,
+  font: {
+      fontSize: 40
+  },
+  color: "#e7e7e7"     
 }
 
 "#header": {

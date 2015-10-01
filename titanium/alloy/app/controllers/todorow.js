@@ -1,6 +1,6 @@
 (function initialize(args) {
 
-	console.log(args);
+  $.todoRow.rowData = args;
 
 	$.icon.setText(args.icon || '');
 	$.icon.setColor(args.iconColor || '#000');

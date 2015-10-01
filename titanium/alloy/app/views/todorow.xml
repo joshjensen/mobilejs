@@ -1,7 +1,7 @@
 <Alloy>
-	<TableViewRow>
+	<TableViewRow id="todoRow">
 		<View id="toDoRowWrapper">
-			<View id="toDoRow">
+			<View id="toDoRowContent">
 				<Label id="icon" />
 				<Label id="text" />
 			</View>

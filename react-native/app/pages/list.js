@@ -26,7 +26,7 @@ var ListPage = React.createClass({
       dataSource: this.ds.cloneWithRows(this.props.todoItems || []),
     };
   },
-  markAllAsDoneButton: function() {
+  markAllAsDone: function() {
     var that = this;
 
     function markAllAsDone(todoItems) {
@@ -187,7 +187,7 @@ var ListPage = React.createClass({
           <View style={styles.formWrapper}> 
             <TouchableOpacity
               style={styles.touchableAreaIcon} 
-              onPress={() => this.markAllAsDoneButton()}
+              onPress={() => this.markAllAsDone()}
               activeOpacity={0.2}
               >
               <Icon
