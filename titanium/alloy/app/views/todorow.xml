@@ -2,8 +2,9 @@
 	<TableViewRow id="todoRow">
 		<View id="toDoRowWrapper">
 			<View id="toDoRowContent">
-				<Label id="icon" />
+				<Label id="icon" class="fa" />
 				<Label id="text" />
+        <Label id="deleteIcon" class="fa" ></Label>
 			</View>
 			<View class="hborder" />
 		</View>

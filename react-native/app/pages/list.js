@@ -124,9 +124,9 @@ var ListPage = React.createClass({
   deleteRow: function(rowID) {
     this.state.todoItems.splice(rowID, 1);
 
-    if (this.props.updateRowChildren) {
-      this.props.updateRowChildren(this.props.rowID, this.state.todoItems);   
-    }
+    // if (this.props.updateRowChildren) {
+    //   this.props.updateRowChildren(this.props.rowID, this.state.todoItems);   
+    // }
     
     this.setState({
       dataSource: this.ds.cloneWithRows(this.state.todoItems)

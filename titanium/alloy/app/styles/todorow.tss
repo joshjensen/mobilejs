@@ -22,9 +22,22 @@
   textAlign: "center",
   verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
 	font: {
-		fontFamily: "FontAwesome",
 		fontSize: 30
 	}	
+}
+
+"#deleteIcon": {
+  right: 10,
+  height: 30,
+  width: 30,
+  textAlign: "center",
+  verticalAlign: Titanium.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
+  font: {
+    fontSize: 30
+  },
+  color: "#f44412",
+  opacity: 0,
+  visible: false
 }
 
 "#text": {

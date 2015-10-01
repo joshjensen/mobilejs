@@ -6,13 +6,14 @@ var application = require('application');
   $.rowID = (args.rowID === false) ? false : args.rowID;
   $.updateRowChildren = args.updateRowChildren || false;
 
-  // console.log(args);
-
-  $.textInput.focus();
   $.todoTable.setData(buildRows($.todoItems));
 
   addEventListeners();
   toggleBackButton();
+
+  setTimeout(function() {
+    $.textInput.focus();
+  }, 1);
 })(arguments[0]);
 
 function toggleBackButton() {
@@ -23,10 +24,22 @@ function toggleBackButton() {
 
 function markAllAsDone() {
 
-}
+  function markAllAsDone(todoItems) {
+    _.each(todoItems, function(item, index) {
+      if (item.children && item.children.length > 0) {
+        item.children = markAllAsDone(item.children);
+      }
 
-function updateChildren() {
+      todoItems[index] = _.extend(item, config.rowTypes.done);
+    });
 
+    return todoItems;
+  }
+
+  $.todoItems = markAllAsDone($.todoItems);
+  $.todoTable.setData(buildRows($.todoItems)); 
+
+  updatedTodoRows = null;
 }
 
 function clearTextInput() {
@@ -46,10 +59,12 @@ function createRow(e) {
     if ($.updateRowChildren) {
       $.updateRowChildren($.rowID, $.todoItems);
     }
+    
+    $.textInput.focus();
   }
 
   clearTextInput();
-}
+} 
 
 function buildRows(rows) {
   return _.map(rows, function(row){ 
@@ -57,48 +72,75 @@ function buildRows(rows) {
   });
 }
 
-function updateRow() {
+function updateRow(rowID, params) {
+  if (rowID === false) {
+    return;
+  }
 
+  var thisRow = $.todoItems[rowID];
+
+  if (thisRow.children && thisRow.children.length > 0) {
+    function toggelAllChildren(childTodoItems) {
+      _.each(childTodoItems, function(item, index) {
+        if (item.children && item.children.length > 0) {
+          item.children = toggelAllChildren(item.children);
+        }
+
+        childTodoItems[index] = _.extend(item, _.omit(params, 'id', 'rowID', 'text', 'children'));
+      });
+
+      return childTodoItems;
+    };
+
+    thisRow.children = toggelAllChildren(thisRow.children);
+  }
+
+  $.todoItems[rowID] = _.extend(thisRow, params);
 }
 
-function deleteRow() {
+function onPressCheckbox(rowData, e) {
+  var toUpdate = {};
+  if (rowData.isChecked) {
+    toUpdate = config.rowTypes.notDone;
+  } else {
+    toUpdate = config.rowTypes.done; 
+  }
 
+  e.row.icon.applyProperties({
+    text: toUpdate.icon || '',
+    color: toUpdate.iconColor || '#000',
+  });
+
+  newRowParams = _.extend(rowData, toUpdate);
+
+  e.rowData.rowData = newRowParams;
+  updateRow(e.index, newRowParams)  
+}
+
+function deleteRow(e) {
+  $.todoItems.splice(e.index, 1);   
+  $.todoTable.setData(buildRows($.todoItems));
 }
 
 function updateRowChildren(rowID, children) {
-  // console.log($.todoItems);
-  // console.log($.todoItems[rowID]);
-  // console.log($.todoItems[rowID].rowData);
-  // console.log($.todoItems[rowID].rowData.children);
   if ($.todoItems[rowID]) {
-    console.log(children);
     $.todoItems[rowID].children = children;
-  }  
-
-  console.log($.todoItems[rowID]);
+  }
 }
 
 function rowOnPress(e) {
   var rowData = $.todoItems[e.index];
   var source = e.source;
 
-  console.log(rowData);
-
   if (source.id === 'icon') {
-    var newRowParams = {};
-    if (rowData.isChecked) {
-      newRowParams= config.rowTypes.notDone;
-    } else {
-      newRowParams = config.rowTypes.done; 
-    }
-
-    source.applyProperties({
-      text: newRowParams.icon || '',
-      color: newRowParams.iconColor || '#000',
-    });
-
-    e.rowData.rowData = _.extend(rowData, newRowParams);
+    onPressCheckbox(rowData, e);
+    return;
   }
+
+  if (source.id === 'deleteIcon') {
+    deleteRow(e);
+    return;    
+  }  
 
   if (source.id !== 'icon') {
     application.navWindow.openWindow(
@@ -116,16 +158,41 @@ function backOnPress() {
   $.listWindow.close();
 }
 
+function onSwipe(e) {
+  console.log(e);
+  console.log(JSON.stringify(e.row));
+  console.log(JSON.stringify(e.row.children));
+
+  if (e.direction === 'right' && e.row.deleteIsVisible) {
+    e.row.toggleDelete();
+  }
+
+  if (e.direction === 'right' && !e.row.deleteIsVisible) {
+    var rowData = $.todoItems[e.index];
+
+    onPressCheckbox(rowData, e); 
+  }
+
+  if (e.direction === 'left') {
+    e.row.toggleDelete();  
+  }
+  
+}
+
 function addEventListeners() {
   $.backButton.addEventListener('click', backOnPress);
-  $.todoTable.addEventListener('click', rowOnPress);
+  $.selectAllIcon.addEventListener('click', markAllAsDone);
+  $.todoTable.addEventListener('singletap', rowOnPress);
   $.textInput.addEventListener('return', createRow);
+  $.todoTable.addEventListener('swipe', onSwipe);
 }
 
 function removeEventListeners() {
   $.backButton.removeEventListener('click', backOnPress);
-  $.todoTable.removeEventListener('click', rowOnPress);
+  $.selectAllIcon.removeEventListener('click', markAllAsDone);
+  $.todoTable.removeEventListener('singletap', rowOnPress);
   $.textInput.removeEventListener('return', createRow);
+  $.todoTable.removeEventListener('swipe', onSwipe);
 }
 
 
