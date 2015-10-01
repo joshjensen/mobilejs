@@ -23,7 +23,6 @@ function toggleBackButton() {
 }
 
 function markAllAsDone() {
-
   function markAllAsDone(todoItems) {
     _.each(todoItems, function(item, index) {
       if (item.children && item.children.length > 0) {
@@ -176,7 +175,6 @@ function onSwipe(e) {
   if (e.direction === 'left') {
     e.row.toggleDelete();  
   }
-  
 }
 
 function addEventListeners() {
@@ -194,17 +192,3 @@ function removeEventListeners() {
   $.textInput.removeEventListener('return', createRow);
   $.todoTable.removeEventListener('swipe', onSwipe);
 }
-
-
-
-// function createRow(text) {
-//     $.todoItems.unshift(_.extend({
-//       rowID: new Date().getTime(),
-//       text: text,
-//       children: []
-//     }, config.rowTypes.notDone));
-// }
-
-// function updateItems() {
-//   $.todoListSection.setItems($.todoItems);
-// }

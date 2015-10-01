@@ -1,5 +1,4 @@
 (function initialize(args) {
-
   $.todoRow.rowData = args;
   $.todoRow.toggleDelete = toggleDelete;
   $.todoRow.icon = $.icon;
@@ -8,9 +7,6 @@
 	$.icon.setColor(args.iconColor || '#000');
 
 	$.text.setText(args.text || '');
-
-  
-
 })(arguments[0]);
 
 function toggleDelete() {
