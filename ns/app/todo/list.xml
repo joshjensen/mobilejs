@@ -1,4 +1,4 @@
-<Page xmlns="http://www.nativescript.org/tns.xsd" loaded="loaded">
+<Page xmlns="http://www.nativescript.org/tns.xsd" navigatedTo="navigatedTo">
   <DockLayout stretchLastChild="true">
     <StackLayout dock="top" text="fill" id="wrapper">
       <Label text="Todo" id="header" stretch="none" horizontalAlignment="center" />
@@ -7,10 +7,10 @@
         <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
       </StackLayout>
     </StackLayout>
-    <ListView items="{{ todos }}" id="listView" separatorColor="#fff">
+    <ListView items="{{ todoItems }}" id="listView" separatorColor="#fff">
         <ListView.itemTemplate>
             <StackLayout orientation="horizontal" cssClass="todo-row">
-                <Label text="{{ done ? '' : '' }}" cssClass="fa checkbox" tap="toggle" />
+                <Label text="{{ done ? '' : '' }}" cssClass="fa checkbox"  />
                 <Label text="{{ name }}" />
             </StackLayout>
         </ListView.itemTemplate>
