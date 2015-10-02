@@ -6,7 +6,6 @@ application.cssFile = './app.css';
 
 if (application.ios) {
   var fontModule = require('ui/styling/font');
-  fontModule.ios.registerFont("IndieFlower.ttf");
   fontModule.ios.registerFont('fontawesome-webfont.ttf');
 }
 
