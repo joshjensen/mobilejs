@@ -65,10 +65,10 @@ exports.navigatedTo = function(args) {
     listView.on('itemTap', rowOnPress);
     
     function updateRowChildren(rowID, children) {
-        if (args.object.todoItems.getItem(rowID)) {
-            var item = args.object.todoItems.getItem(rowID);
+        if (todoItems.getItem(rowID)) {
+            var item = todoItems.getItem(rowID);
             item.children = children;
-            args.object.todoItems.setItem(rowID, item);
+            todoItems.setItem(rowID, item);
         }
     }
 
@@ -77,7 +77,7 @@ exports.navigatedTo = function(args) {
         if (name) {
             page.getViewById("textInput").focus();
             todoItems.unshift({ name: name, done: false, children: new observableArray.ObservableArray([])});
-            args.object.todoItems = todoItems;
+            // args.object.todoItems = todoItems;
             if (page.navigationContext && page.navigationContext.updateRowChildren) {
                 page.navigationContext.updateRowChildren(page.navigationContext.rowID, todoItems);
             }
