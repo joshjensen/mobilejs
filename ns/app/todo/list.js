@@ -7,6 +7,8 @@ var observableArray = require("data/observable-array");
 var swipeDelete = require("../utils/ios-swipe-delete");
 
 var topmost = null;
+var rowOnPress;
+var toggleCheck;
 
 exports.navigatedTo = function(args) {
     var page = args.object;
@@ -25,6 +27,8 @@ exports.navigatedTo = function(args) {
 
     var pageData = new observableModule.Observable();
     var listView = page.getViewById("listView");
+
+    var icon = page.getViewById("icon");
 
     pageData.set("todoItems", todoItems);
 
@@ -48,21 +52,15 @@ exports.navigatedTo = function(args) {
         });
     }
 
-    page.onNavigatingFrom = function() {
-        listView.off('itemTap', rowOnPress);
-    }
+    // page.onNavigatingFrom = function() {
+    //     listView.off('itemTap', rowOnPress);
+    // }
     
-    function rowOnPress(args) {
-        frameModule.topmost().navigate({
-            moduleName: "todo/list",
-            context: {
-                rowID: args.index,
-                updateRowChildren: updateRowChildren,
-                todoItems: todoItems.getItem(args.index).children
-            }
-        });        
-    }
-    listView.on('itemTap', rowOnPress);
+    // listView.on('itemTap', rowOnPress);
+
+    // icon.on('tap', function() {
+    //     console.log('test');
+    // });    
     
     function updateRowChildren(rowID, children) {
         if (todoItems.getItem(rowID)) {
@@ -84,4 +82,31 @@ exports.navigatedTo = function(args) {
             pageData.set("todo", "");
         }
     }
+
+    rowOnPress = function(args) {
+        console.log(args);
+
+        frameModule.topmost().navigate({
+            moduleName: "todo/list",
+            context: {
+                rowID: args.index,
+                updateRowChildren: updateRowChildren,
+                todoItems: todoItems.getItem(args.index).children
+            }
+        });        
+    }
+
+    toggleCheck = function(args) {
+        var currentItem = args.view.bindingContext;
+        var index = todoItems.indexOf(currentItem);
+        todoItems.setItem(index, { name: currentItem.name, done: !currentItem.done });        
+    };
+};
+
+exports.rowOnPress = function(args) {
+    rowOnPress(args);
+};
+
+exports.toggleCheck = function(args) {
+    toggleCheck(args);
 };

@@ -7,10 +7,10 @@
         <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
       </StackLayout>
     </StackLayout>
-    <ListView items="{{ todoItems }}" id="listView" separatorColor="#fff">
+    <ListView items="{{ todoItems }}" id="listView" itemTap="rowOnPress" separatorColor="#fff">
         <ListView.itemTemplate>
             <StackLayout orientation="horizontal" cssClass="todo-row">
-                <Label text="{{ done ? '' : '' }}" cssClass="fa checkbox"  />
+                <Label text="{{ done ? '' : '' }}" tap="toggleCheck" cssClass="fa checkbox"  />
                 <Label text="{{ name }}" />
             </StackLayout>
         </ListView.itemTemplate>
