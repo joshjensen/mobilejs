@@ -1,17 +1,20 @@
 <Page xmlns="http://www.nativescript.org/tns.xsd" navigatedTo="navigatedTo">
   <DockLayout stretchLastChild="true">
     <StackLayout dock="top" text="fill" id="wrapper">
-      <Label text="Todo" id="header" stretch="none" horizontalAlignment="center" />
+      <StackLayout>
+        <Label text="Todo" id="header" horizontalAlignment="stretch" />       
+        <Label text="" id="backButton" cssClass="fa" horizontalAlignment="left" visibility="{{ showBack ? 'visible' : 'collapsed' }}" tap="onBackTap" /> 
+      </StackLayout>
       <StackLayout orientation="horizontal" id="formWrapper" cssClass="fa">
-        <Label text="" id="selectAllIcon" />
-        <TextField text="{{ todo }}" id="textInput" hint="What needs to be done?" />
+        <Label text="" id="selectAllIcon" tap="markAllAsDoneOnTap" />
+        <TextField text="{{ textInput }}" id="textInput" hint="What needs to be done?" />
       </StackLayout>
     </StackLayout>
     <ListView items="{{ todoItems }}" id="listView" itemTap="rowOnPress" separatorColor="#fff">
         <ListView.itemTemplate>
             <StackLayout orientation="horizontal" cssClass="todo-row">
-                <Label text="{{ done ? '' : '' }}" tap="toggleCheck" cssClass="fa checkbox"  />
-                <Label text="{{ name }}" />
+                <Label text="{{ isChecked ? '' : '' }}" color="{{ iconColor }}" tap="onPressCheckbox" cssClass="fa checkbox"  />
+                <Label text="{{ text }}" />
             </StackLayout>
         </ListView.itemTemplate>
     </ListView>

@@ -2,7 +2,18 @@
   font-family: "HelveticaNeueThin", "HelveticaNeue-Thin", "Helvetica Neue Thin", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosRegular', "Arial", sans-serif;
   font-size: 80;
   text-align: center;
-  color: #e7e7e7;
+  color: #d2d2d2;
+  right: 10;
+}
+
+#backButton {
+  margin-bottom: 25;
+  margin-top: -65;
+  margin-left: 10;
+  width: 40;
+  height: 40;
+  font-size: 40;
+  color: #c3c3c3;
 }
 
 #textInput {
@@ -39,20 +50,15 @@
   margin-left: 10;
 }
 
-.font-awesome {
-  font-family: FontAwesome;
-}
-
 .checkbox {
   margin-left: 5;
   margin-right: 10;
-  font-size: 35;
+  font-size: 30;
   width: 30;
   height: 30;
-  color: #737373;
 }
 
 .todo-row {
   padding: 10;
-  background-color: #F2FBFF;
+  background-color: #fff;
 }
