@@ -1,6 +1,5 @@
 var application = require('application');
 
-
 application.mainModule = 'todo/list';
 application.cssFile = './app.css';
 

@@ -63,82 +63,82 @@ exports.navigatedTo = function(args) {
     });
   }
     
-    function updateRowChildren(rowID, children) {
-        if (todoItems.getItem(rowID)) {
-            var item = todoItems.getItem(rowID);
-            item.children = children;
-            todoItems.setItem(rowID, item);
+  function updateRowChildren(rowID, children) {
+    if (todoItems.getItem(rowID)) {
+      var item = todoItems.getItem(rowID);
+      item.children = children;
+      todoItems.setItem(rowID, item);
+    }
+  }
+
+  function createRow(args) {
+    var text = pageData.get('textInput');
+    if (text) {
+      page.getViewById("textInput").focus();
+
+      todoItems.unshift(_.extend({
+        text: text,
+        children: new observableArray.ObservableArray([])
+      }, config.rowTypes.notDone));
+
+      if (page.navigationContext && page.navigationContext.updateRowChildren) {
+        page.navigationContext.updateRowChildren(page.navigationContext.rowID, todoItems);
+      }        
+      
+      pageData.set("textInput", "");
+    }
+  }
+
+  markAllAsDoneOnTap = function () {
+    function markAllAsDone(_todoItems) {
+      _todoItems.forEach(function(item, index) {
+        console.log('test');
+        if (item.children && item.children.length > 0) {
+          item.children = markAllAsDone(item.children);
         }
+
+        // ObservableArray's support JS Array.prototype methods
+        _todoItems.setItem(index, _.extend({
+          text: item.text,
+          children: item.children
+        }, config.rowTypes.done));         
+      });
+
+      return _todoItems;
     }
 
-    function createRow(args) {
-        var text = pageData.get('textInput');
-        if (text) {
-            page.getViewById("textInput").focus();
+    todoItems = markAllAsDone(todoItems);
+    args.object.todoItems = todoItems;
+  };    
 
-            todoItems.unshift(_.extend({
-                text: text,
-                children: new observableArray.ObservableArray([])
-            }, config.rowTypes.notDone));
-
-            if (page.navigationContext && page.navigationContext.updateRowChildren) {
-                page.navigationContext.updateRowChildren(page.navigationContext.rowID, todoItems);
-            }        
-            
-            pageData.set("textInput", "");
-        }
-    }
-
-    markAllAsDoneOnTap = function () {
-      function markAllAsDone(_todoItems) {
-        _todoItems.forEach(function(item, index) {
-          console.log('test');
-          if (item.children && item.children.length > 0) {
-            item.children = markAllAsDone(item.children);
-          }
-
-          // ObservableArray's support JS Array.prototype methods
-          _todoItems.setItem(index, _.extend({
-            text: item.text,
-            children: item.children
-          }, config.rowTypes.done));         
-        });
-
-        return _todoItems;
+  rowOnPress = function(args) {
+    topmost.navigate({
+      moduleName: "todo/list",
+      context: {
+        rowID: args.index,
+        updateRowChildren: updateRowChildren,
+        todoItems: todoItems.getItem(args.index).children
       }
+    });        
+  }
 
-      todoItems = markAllAsDone(todoItems);
-      args.object.todoItems = todoItems;
-    };    
+  onPressCheckbox = function(args) {
+    var currentItem = args.view.bindingContext;
 
-    rowOnPress = function(args) {
-        topmost.navigate({
-            moduleName: "todo/list",
-            context: {
-                rowID: args.index,
-                updateRowChildren: updateRowChildren,
-                todoItems: todoItems.getItem(args.index).children
-            }
-        });        
-    }
+    var index = todoItems.indexOf(currentItem);
+    var toUpdate = {};
+    
+    if (currentItem.isChecked) {
+        toUpdate = config.rowTypes.notDone;
+    } else {
+        toUpdate = config.rowTypes.done; 
+    }     
 
-    onPressCheckbox = function(args) {
-        var currentItem = args.view.bindingContext;
-
-        var index = todoItems.indexOf(currentItem);
-        var toUpdate = {};
-        
-        if (currentItem.isChecked) {
-            toUpdate = config.rowTypes.notDone;
-        } else {
-            toUpdate = config.rowTypes.done; 
-        }     
-
-        todoItems.setItem(index, _.extend({
-            text: currentItem.text,
-            children: currentItem.children
-        }, toUpdate));
-    };
+    todoItems.setItem(index, _.extend({
+        text: currentItem.text,
+        children: currentItem.children
+    }, toUpdate));
+  };
 
 };
 
@@ -153,9 +153,9 @@ exports.markAllAsDoneOnTap = function() {
 }
 
 exports.rowOnPress = function() {
-    rowOnPress.apply(this, arguments);
+  rowOnPress.apply(this, arguments);
 };
 
 exports.onPressCheckbox = function() {
-    onPressCheckbox.apply(this, arguments);
+  onPressCheckbox.apply(this, arguments);
 };
