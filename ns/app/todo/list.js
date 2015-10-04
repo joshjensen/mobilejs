@@ -89,27 +89,30 @@ exports.navigatedTo = function(args) {
     }
   }
 
+  function markAllAsDone(_todoItems, newParams) {
+    newParams = newParams || config.rowTypes.done;
+    _todoItems.forEach(function(item, index) {
+
+      if (item.children && item.children.length > 0) {
+        item.children = markAllAsDone(item.children, newParams);
+      }
+
+      console.log(JSON.stringify(newParams));
+
+      // ObservableArray's support JS Array.prototype methods
+      _todoItems.setItem(index, _.extend({
+        text: item.text,
+        children: item.children
+      }, newParams));         
+    });
+
+    return _todoItems;
+  }
+
   markAllAsDoneOnTap = function () {
-    function markAllAsDone(_todoItems) {
-      _todoItems.forEach(function(item, index) {
-        console.log('test');
-        if (item.children && item.children.length > 0) {
-          item.children = markAllAsDone(item.children);
-        }
-
-        // ObservableArray's support JS Array.prototype methods
-        _todoItems.setItem(index, _.extend({
-          text: item.text,
-          children: item.children
-        }, config.rowTypes.done));         
-      });
-
-      return _todoItems;
-    }
-
     todoItems = markAllAsDone(todoItems);
     args.object.todoItems = todoItems;
-  };    
+  };   
 
   rowOnPress = function(args) {
     topmost.navigate({
@@ -138,6 +141,8 @@ exports.navigatedTo = function(args) {
         text: currentItem.text,
         children: currentItem.children
     }, toUpdate));
+
+    markAllAsDone(currentItem.children, toUpdate);
   };
 
 };
