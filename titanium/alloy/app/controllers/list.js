@@ -36,7 +36,7 @@ function markAllAsDone() {
   }
 
   $.todoItems = markAllAsDone($.todoItems);
-  $.todoTable.setData(buildRows($.todoItems)); 
+  $.todoTable.setData(buildRows($.todoItems));
 
   updatedTodoRows = null;
 }
@@ -52,21 +52,21 @@ function createRow(e) {
       text: e.value,
       children: []
     }, config.rowTypes.notDone));
-  
-    $.todoTable.setData(buildRows($.todoItems));   
+
+    $.todoTable.setData(buildRows($.todoItems));
 
     if ($.updateRowChildren) {
       $.updateRowChildren($.rowID, $.todoItems);
     }
-    
+
     $.textInput.focus();
   }
 
   clearTextInput();
-} 
+}
 
 function buildRows(rows) {
-  return _.map(rows, function(row){ 
+  return _.map(rows, function(row){
     return Alloy.createController('todorow', row).getView();
   });
 }
@@ -102,7 +102,7 @@ function onPressCheckbox(rowData, e) {
   if (rowData.isChecked) {
     toUpdate = config.rowTypes.notDone;
   } else {
-    toUpdate = config.rowTypes.done; 
+    toUpdate = config.rowTypes.done;
   }
 
   e.row.icon.applyProperties({
@@ -113,11 +113,11 @@ function onPressCheckbox(rowData, e) {
   newRowParams = _.extend(rowData, toUpdate);
 
   e.rowData.rowData = newRowParams;
-  updateRow(e.index, newRowParams)  
+  updateRow(e.index, newRowParams)
 }
 
 function deleteRow(e) {
-  $.todoItems.splice(e.index, 1);   
+  $.todoItems.splice(e.index, 1);
   $.todoTable.setData(buildRows($.todoItems));
 }
 
@@ -138,8 +138,8 @@ function rowOnPress(e) {
 
   if (source.id === 'deleteIcon') {
     deleteRow(e);
-    return;    
-  }  
+    return;
+  }
 
   if (source.id !== 'icon') {
     application.navWindow.openWindow(
@@ -153,7 +153,7 @@ function rowOnPress(e) {
 }
 
 function backOnPress() {
-  removeEventListeners();  
+  removeEventListeners();
   $.listWindow.close();
 }
 
@@ -169,11 +169,11 @@ function onSwipe(e) {
   if (e.direction === 'right' && !e.row.deleteIsVisible) {
     var rowData = $.todoItems[e.index];
 
-    onPressCheckbox(rowData, e); 
+    onPressCheckbox(rowData, e);
   }
 
   if (e.direction === 'left') {
-    e.row.toggleDelete();  
+    e.row.toggleDelete();
   }
 }
 

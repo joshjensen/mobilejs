@@ -22,12 +22,12 @@ var ToDoRow = React.createClass({
       text: 'Delete',
       backgroundColor: "#f44412",
       onPress: this.deleteRow
-    }];   
+    }];
 
     return _.extend({
-      closed: false        
+      closed: false
     }, this.props.rowData);
-  },  
+  },
   onPressCheckbox: function() {
     var rowParams = this.props.rowParams;
     var rowData = this.props.rowData;
@@ -35,7 +35,7 @@ var ToDoRow = React.createClass({
     var toUpdate = {};
 
     if (rowData.isChecked) {
-      toUpdate = _.extend({id: rowParams.rowID}, config.rowTypes.notDone); 
+      toUpdate = _.extend({id: rowParams.rowID}, config.rowTypes.notDone);
     } else {
       toUpdate = _.extend({id: rowParams.rowID}, config.rowTypes.done);
     }
@@ -43,14 +43,14 @@ var ToDoRow = React.createClass({
     var newRowParams = _.extend(rowData, toUpdate);
 
     this.setState(newRowParams);
-    this.props.updateRow(newRowParams);
+    this.props.rowParams.updateRow(newRowParams);
   },
   deleteRow: function() {
     this.setState({
       closed: true
-    });    
+    });
 
-    this.props.deleteRow(this.props.rowParams.rowID);    
+    this.props.rowParams.deleteRow(this.props.rowParams.rowID);
   },
   onLeftOpen: function() {
     this.onPressCheckbox();
@@ -63,23 +63,23 @@ var ToDoRow = React.createClass({
     return {
       // alignSelf: 'center',
       textDecorationLine: this.props.rowData.lineThrough || 'none'
-    };    
+    };
   },
   rowOnPress: function() {
-    this.props.rowOnPress(this.props.rowParams.rowID);
+    this.props.rowParams.rowOnPress(this.props.rowParams.rowID);
   },
 	render: function() {
 		return (
   		<View key={new Date().getTime()}>
-        <Swipeout 
+        <Swipeout
           close={this.state.closed}
-          left={this.props.rowData.leftSwipeButtons}        
+          left={this.props.rowData.leftSwipeButtons}
           right={this.rightSwipeButtons}
           onLeftOpen={this.onLeftOpen}
         >
           <View style={styles.toDoRow}>
             <TouchableOpacity
-              style={styles.touchableAreaIcon} 
+              style={styles.touchableAreaIcon}
               onPress={() => this.onPressCheckbox()}
               activeOpacity={0.2}
               >
@@ -88,21 +88,21 @@ var ToDoRow = React.createClass({
                 size={30}
                 color={this.props.rowData.iconColor}
                 style={styles.iconSquare}
-                />  
+                />
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.textWrapper} 
+            <TouchableOpacity
+              style={styles.textWrapper}
               onPress={() => this.rowOnPress(this.props.rowData.rowID)}
               >
-              <Text 
+              <Text
                 numberOfLines={5}
-                style={this.textStyle()} 
+                style={this.textStyle()}
                 >
                 {this.props.rowData.text}
               </Text>
-            </TouchableOpacity>          
+            </TouchableOpacity>
           </View>
-        </Swipeout>        
+        </Swipeout>
   		</View>
 		);
 	}
@@ -115,10 +115,10 @@ var styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     // justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#ffffff',
     borderBottomColor: '#e6e6e6',
-    borderBottomWidth: 1    
-  },	
+    borderBottomWidth: 1
+  },
   touchableAreaIcon: {
     alignSelf: 'center',
   },

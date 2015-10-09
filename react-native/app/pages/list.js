@@ -49,7 +49,7 @@ var ListPage = React.createClass({
     });
 
     updatedTodoRows = null;
-  },  
+  },
   updateChildren: function() {
     function updateChildren(todoItem) {
       _.each(todoItem, function(item, index) {
@@ -71,7 +71,7 @@ var ListPage = React.createClass({
     var that = this;
     setTimeout(function() {
       that.refs.textInput.focus();
-    }, 1);    
+    }, 1);
   },
   createRow: function(e) {
     if (!e.nativeEvent.text || e.nativeEvent.text === '') {
@@ -83,7 +83,7 @@ var ListPage = React.createClass({
       text: e.nativeEvent.text,
       children: []
     }, config.rowTypes.notDone));
-  
+
     if (this.props.updateRowChildren) {
       this.props.updateRowChildren(this.props.rowID, this.state.todoItems);
     }
@@ -92,7 +92,7 @@ var ListPage = React.createClass({
       dataSource: this.ds.cloneWithRows(this.state.todoItems)
     }, function() {
       this.clearTextInput();
-    });    
+    });
   },
   updateRow: function(params) {
     if (!params.id) {
@@ -125,13 +125,13 @@ var ListPage = React.createClass({
     this.state.todoItems.splice(rowID, 1);
 
     // if (this.props.updateRowChildren) {
-    //   this.props.updateRowChildren(this.props.rowID, this.state.todoItems);   
+    //   this.props.updateRowChildren(this.props.rowID, this.state.todoItems);
     // }
-    
+
     this.setState({
       dataSource: this.ds.cloneWithRows(this.state.todoItems)
     });
-  },  
+  },
   updateRowChildren: function(rowID, children) {
     if (this.state.todoItems[rowID]) {
       this.state.todoItems[rowID].children = children;
@@ -156,7 +156,7 @@ var ListPage = React.createClass({
     if (this.props.showBack) {
       return (
         <TouchableOpacity
-          style={styles.touchableAreaBackIcon} 
+          style={styles.touchableAreaBackIcon}
           onPress={() => this.backOnPress()}
           activeOpacity={0.2}
           >
@@ -165,7 +165,7 @@ var ListPage = React.createClass({
             size={30}
             color='#ead7d7'
             style={styles.backButtonIcon}
-            />  
+            />
         </TouchableOpacity>
       );
     }
@@ -174,19 +174,19 @@ var ListPage = React.createClass({
     if (this.state.todoItems.length === 0) {
       this.refs.textInput.focus();
     }
-  },  
+  },
   render: function() {
     return (
       <View style={styles.container}>
-        <Text 
+        <Text
           style={styles.header}>
           todos
-        </Text>      
-        {this.renderBackButton()}        
+        </Text>
+        {this.renderBackButton()}
         <View style={styles.wrapper}>
-          <View style={styles.formWrapper}> 
+          <View style={styles.formWrapper}>
             <TouchableOpacity
-              style={styles.touchableAreaIcon} 
+              style={styles.touchableAreaIcon}
               onPress={() => this.markAllAsDone()}
               activeOpacity={0.2}
               >
@@ -195,10 +195,10 @@ var ListPage = React.createClass({
                 size={18}
                 color='#737373'
                 style={styles.selectAllIcon}
-                />  
+                />
             </TouchableOpacity>
             <TextInput
-              ref="textInput" 
+              ref="textInput"
               // ref={component => this._textInput = component}
               style={styles.textInput}
               clearTextOnFocus={true}
@@ -213,7 +213,16 @@ var ListPage = React.createClass({
             style={styles.todoListView}
             initialListSize={15}
             dataSource={this.state.dataSource}
-            renderRow={(rowData, sectionID, rowID, highlightRow) => (<TodoRow updateRow={this.updateRow} deleteRow={this.deleteRow} rowOnPress={this.rowOnPress} rowData={rowData} rowParams={{sectionID, rowID, highlightRow}} />)}
+            renderRow={(rowData, sectionID, rowID, highlightRow) => (
+              <TodoRow rowParams={{
+                sectionID,
+                rowID,
+                highlightRow,
+                updateRow: this.updateRow,
+                deleteRow: this.deleteRow,
+                rowOnPress: this.rowOnPress
+              }} rowData={rowData} />
+            )}
             // http://stackoverflow.com/questions/29496054/react-native-listview-leaving-space
             automaticallyAdjustContentInsets={false}
           />
@@ -251,7 +260,7 @@ var styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#000'
-  },  
+  },
   header: {
     fontFamily: 'Helvetica Neue',
     fontWeight: '100',
@@ -270,7 +279,7 @@ var styles = StyleSheet.create({
       height: -1,
       width: -1
     },
-    position: 'absolute', 
+    position: 'absolute',
     top: 120, bottom: 10, left: 10, right: 10
   },
   formWrapper: {
@@ -281,13 +290,13 @@ var styles = StyleSheet.create({
   touchableAreaIcon: {
     height: 60,
     width: 60,
-    justifyContent: 'center'    
+    justifyContent: 'center'
   },
   selectAllIcon: {
     alignSelf: 'center',
     width: 40,
     height: 40
-  }, 
+  },
   textInput: {
     flex: 1,
     height: 60,
@@ -295,10 +304,10 @@ var styles = StyleSheet.create({
     fontFamily: 'Helvetica Neue',
     fontWeight: '100',
     fontSize: 24,
-    color: '#000'    
+    color: '#000'
   },
   todoListView: {
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#ffffff'
   },
   toDoRow: {
     flex: 1,
@@ -306,7 +315,7 @@ var styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
     // justifyContent: 'center',
-    backgroundColor: '#F5FCFF',    
+    backgroundColor: '#ffffff',
   }
 });
 

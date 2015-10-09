@@ -8,8 +8,6 @@ var {
   NavigatorIOS
 } = React;
 
-// var ListPage = require('App/Pages/List');
-
 var todomjs = React.createClass({
   render: function() {
     return (
@@ -20,7 +18,7 @@ var todomjs = React.createClass({
           title: '',
           component: ListPage
         }}
-      />      
+      />
     );
   }
 });

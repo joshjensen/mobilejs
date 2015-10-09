@@ -2,8 +2,8 @@
   <DockLayout stretchLastChild="true">
     <StackLayout dock="top" text="fill" id="wrapper">
       <StackLayout>
-        <Label text="Todo" id="header" horizontalAlignment="stretch" />       
-        <Label text="" id="backButton" cssClass="fa" horizontalAlignment="left" visibility="{{ showBack ? 'visible' : 'collapsed' }}" tap="onBackTap" /> 
+        <Label text="Todo" id="header" horizontalAlignment="stretch" />
+        <Label text="" id="backButton" cssClass="fa" horizontalAlignment="left" visibility="{{ showBack ? 'visible' : 'collapsed' }}" tap="onBackTap" />
       </StackLayout>
       <StackLayout orientation="horizontal" id="formWrapper" cssClass="fa">
         <Label text="" id="selectAllIcon" tap="markAllAsDoneOnTap" />
