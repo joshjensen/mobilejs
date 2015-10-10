@@ -1,12 +1,11 @@
 {
-  "nativescript": {
-    "id": "org.nativescript.todomjs",
-    "tns-ios": {
-      "version": "1.3.0"
-    }
-  },
-  "dependencies": {
-    "tns-core-modules": "1.3.0",
-    "underscore": "^1.8.3"
-  }
+	"nativescript": {
+		"id": "org.nativescript.todomjs",
+		"tns-ios": {
+			"version": "1.3.0"
+		}
+	},
+	"dependencies": {
+		"tns-core-modules": "1.3.0"
+	}
 }
