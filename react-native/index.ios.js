@@ -1,7 +1,5 @@
 var React = require('react-native');
 
-var ListPage = require('./app/pages/list');
-
 var {
   AppRegistry,
   StyleSheet,
@@ -16,7 +14,7 @@ var todomjs = React.createClass({
         navigationBarHidden={true}
         initialRoute={{
           title: '',
-          component: ListPage
+          component: require('./app/pages/list')
         }}
       />
     );
